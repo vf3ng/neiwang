@@ -15,3 +15,6 @@ yum install -y openssl openssl-devel pam-devel
 ./configure --prefix=/usr --sysconfdir=/etc/ssh --with-pam --with-kerberos5
 make && make install
 service sshd restart
+cd ..
+rm -f 0x06-openssh-5.9*
+rm -rf openssh-5.9p1*

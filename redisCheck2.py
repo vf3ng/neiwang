@@ -14,7 +14,7 @@ def redisCheck(ip):
 
 if __name__ == '__main__':
 	socket.setdefaulttimeout(10)
-	threed_num = argv[1:]
+	ip,threed_num = argv[1:]
 	ips = [str(ip)+ '.' +str(x) for x in range(255)]
 	pool = ThreadPool(int(threed_num))
 	results = pool.map(redisCheck,ips)

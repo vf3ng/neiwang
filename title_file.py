@@ -5,7 +5,7 @@ import threading
 
 def getTitle(url):
 	try:
-		_ = re.search('<title>(.*?)</title>', requests.get(url,timeout=20).content)
+		_ = re.search('<title>(.*?)</title>', requests.get('http://'+url,timeout=20).content)
 		print url, _.group(1)+'\n'
 	except:
 		pass
